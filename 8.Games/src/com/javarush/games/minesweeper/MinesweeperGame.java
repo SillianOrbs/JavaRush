@@ -14,6 +14,7 @@ public class MinesweeperGame extends Game {
     private static final String FLAG = "\uD83D\uDEA9";
     private int countFlags;
     private boolean isGameStopped;
+    private int countClosedTiles = SIDE * SIDE;
 
 
     @Override
@@ -79,20 +80,23 @@ public class MinesweeperGame extends Game {
         if (object.isOpen || object.isFlag || isGameStopped)
             return;
         object.isOpen = true;
+        countClosedTiles--;
         if (object.isMine) {
             setCellValueEx(x, y, Color.RED, MINE);
             gameOver();
         } else if (object.countMineNeighbors == 0) {
-                List<GameObject> objectsNear = getNeighbors(object);
-                for (GameObject objNear : objectsNear) {
-                    if (!objNear.isOpen)
-                        openTile(objNear.x, objNear.y);
-                }
+            List<GameObject> objectsNear = getNeighbors(object);
+            for (GameObject objNear : objectsNear) {
+                if (!objNear.isOpen)
+                    openTile(objNear.x, objNear.y);
+            }
             setCellValueEx(x, y, Color.GREEN, "");
         } else {
             setCellNumber(x, y, object.countMineNeighbors);
             setCellColor(x, y, Color.GREEN);
         }
+        if (countClosedTiles == countMinesOnField && !object.isMine)
+            win();
     }
 
     @Override
@@ -100,10 +104,10 @@ public class MinesweeperGame extends Game {
         openTile(x, y);
     }
 
-    private void markTile(int x, int y){
+    private void markTile(int x, int y) {
         GameObject object = gameField[y][x];
 
-        if(object.isOpen || (countFlags == 0 && !object.isFlag) || isGameStopped)
+        if (object.isOpen || (countFlags == 0 && !object.isFlag) || isGameStopped)
             return;
 
         if (object.isFlag) {
@@ -125,8 +129,13 @@ public class MinesweeperGame extends Game {
         markTile(x, y);
     }
 
-    private void gameOver(){
+    private void gameOver() {
         isGameStopped = true;
-        showMessageDialog(Color.NONE, "Игра оконченна...", Color.BLACK, 14);
+        showMessageDialog(Color.GRAY, "Игра оконченна...", Color.BLACK, 14);
+    }
+
+    private void win() {
+        isGameStopped = true;
+        showMessageDialog(Color.GRAY, "Вы выиграли!", Color.BLACK, 14);
     }
 }
