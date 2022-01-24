@@ -15,6 +15,7 @@ public class MinesweeperGame extends Game {
     private int countFlags;
     private boolean isGameStopped;
 
+
     @Override
     public void initialize() {
         setScreenSize(SIDE, SIDE);
