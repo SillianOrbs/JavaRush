@@ -17,8 +17,12 @@ public class Solution {
     public static void main(String[] args) {
         //напишите тут ваш код
         for (int i = 0; i < field.length; i++) {
+            int x = (int) (Math.random() * width);
             for (int j = 0; j < field[i].length; j++) {
-                field[i][j] = empty;
+                if (j == x)
+                    field[i][j] = robotank;
+                else
+                    field[i][j] = empty;
             }
         }
         for (int i = 0; i < field.length; i++) {
