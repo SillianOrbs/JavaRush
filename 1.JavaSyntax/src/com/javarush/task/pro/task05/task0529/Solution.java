@@ -34,6 +34,8 @@ public class Solution {
                     bombs[i][j] = 1;
                 else
                     bombs[i][j] = 0;
+                if (field[i][j] == robotank && bombs[i][j] == 1)
+                    field[i][j] = hit;
             }
         }
         for (int i = 0; i < field.length; i++) {
