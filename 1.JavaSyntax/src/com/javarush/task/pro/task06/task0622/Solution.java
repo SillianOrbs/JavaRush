@@ -25,6 +25,11 @@ public class Solution {
         diabloPosition = getRandomNumber(4);
         findDiablo();
         battle();
+        if (isAmigoWin()) {
+            System.out.println(winPhrase);
+        } else {
+            System.out.println(loosePhrase);
+        }
     }
 
     public static int getRandomNumber(int range) {
@@ -72,5 +77,9 @@ public class Solution {
             System.out.println(amigoAttackPhrase);
             diabloLostLife();
         }
+    }
+
+    public static boolean isAmigoWin() {
+        return diabloLives == 0;
     }
 }
