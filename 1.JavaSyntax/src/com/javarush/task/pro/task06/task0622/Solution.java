@@ -24,6 +24,7 @@ public class Solution {
         //напишите тут ваш код
         diabloPosition = getRandomNumber(4);
         findDiablo();
+        battle();
     }
 
     public static int getRandomNumber(int range) {
@@ -58,5 +59,18 @@ public class Solution {
 
     public static int diabloDefends() {
         return getRandomNumber(3);
+    }
+
+    public static void battle() {
+        if (amigoLives == 0 || diabloLives == 0) {
+            return;
+        }
+        if (amigoAttacks() == diabloDefends()) {
+            System.out.println(diabloDefendPhrase);
+            amigoLostLife();
+        } else {
+            System.out.println(amigoAttackPhrase);
+            diabloLostLife();
+        }
     }
 }
